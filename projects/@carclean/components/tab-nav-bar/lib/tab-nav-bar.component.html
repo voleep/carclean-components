@@ -1,0 +1,40 @@
+<nav
+  mat-tab-nav-bar
+  cdkDropList
+  cdkDropListOrientation="horizontal"
+  [mat-stretch-tabs]="false"
+  [tabPanel]="tabPanel"
+  (cdkDropListDropped)="drop($event)"
+>
+  @for (tab of tabs(); track tab.path) {
+  <a
+    #routerLinkActive="routerLinkActive"
+    mat-tab-link
+    routerLinkActive
+    cdkDrag
+    [cdkDragData]="tab"
+    cdkDragBoundary=".mat-mdc-tab-links"
+    [routerLink]="tab.path"
+    [routerLinkActiveOptions]="{
+      matrixParams: 'exact',
+      queryParams: 'ignored',
+      paths: 'exact',
+      fragment: 'exact'
+    }"
+    [active]="routerLinkActive.isActive"
+  >
+    {{ tab.title() }}
+    <div class="tab-close-wrapper">
+      <button
+        mat-icon-button
+        (mousedown)="onCloseDown($event)"
+        (click)="close(tab, $event)"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </a>
+  }
+</nav>
+
+<mat-tab-nav-panel #tabPanel />

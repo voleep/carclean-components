@@ -1,0 +1,11 @@
+mat-toolbar {
+  --mat-toolbar-standard-height: var(--mat-toolbar-mobile-height);
+}
+
+mat-toolbar:has(.car-sidenav-trigger-wrapper > .car-sidenav-trigger) {
+  padding-left: 4px;
+
+  .car-sidenav-trigger-wrapper {
+    margin-right: 4px;
+  }
+}

@@ -4,11 +4,11 @@ import {
   DetachedRouteHandle,
   RouteReuseStrategy,
 } from '@angular/router';
-import { TabNavStore } from '../store/tab-nav-store';
+import { TabLinkStore } from '../store/tab-link-store';
 
 @Injectable()
 export class CarCleanRouteReuseStrategy extends RouteReuseStrategy {
-  private readonly tabNavStore = inject(TabNavStore);
+  private readonly tabNavStore = inject(TabLinkStore);
 
   override shouldDetach(route: ActivatedRouteSnapshot): boolean {
     return this.useTabNavLink(route);

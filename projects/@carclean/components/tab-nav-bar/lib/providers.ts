@@ -1,14 +1,14 @@
 import { EnvironmentProviders, makeEnvironmentProviders } from '@angular/core';
 import { RouteReuseStrategy } from '@angular/router';
 import { CarCleanRouteReuseStrategy } from './route-reuse/route-reuse-strategy';
-import { DefaultTabNavStore } from './store/default-tab-nav-store';
-import { TabNavStore } from './store/tab-nav-store';
+import { DefaultTabLinkStore } from './store/default-tab-link-store';
+import { TabLinkStore } from './store/tab-link-store';
 
-export function provideTabNav(): EnvironmentProviders {
+export function provideTabNavigation(): EnvironmentProviders {
   return makeEnvironmentProviders([
     {
-      provide: TabNavStore,
-      useClass: DefaultTabNavStore,
+      provide: TabLinkStore,
+      useClass: DefaultTabLinkStore,
     },
     {
       provide: RouteReuseStrategy,

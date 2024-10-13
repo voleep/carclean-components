@@ -3,23 +3,23 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "tab-nav": {
+    "@carclean/components": {
       "projectType": "library",
-      "root": "projects/tab-nav",
-      "sourceRoot": "projects/tab-nav/src",
+      "root": "projects/@carclean/components",
+      "sourceRoot": "projects/@carclean/components/src",
       "prefix": "car",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "project": "projects/tab-nav/ng-package.json"
+            "project": "projects/@carclean/components/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/tab-nav/tsconfig.lib.prod.json"
+              "tsConfig": "projects/@carclean/components/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/tab-nav/tsconfig.lib.json"
+              "tsConfig": "projects/@carclean/components/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -27,7 +27,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "tsConfig": "projects/tab-nav/tsconfig.spec.json",
+            "tsConfig": "projects/@carclean/components/tsconfig.spec.json",
             "polyfills": ["zone.js", "zone.js/testing"]
           }
         }

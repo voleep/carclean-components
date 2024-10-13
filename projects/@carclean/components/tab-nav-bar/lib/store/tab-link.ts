@@ -1,12 +1,12 @@
 import { signal } from '@angular/core';
-import { TabNavStore } from './tab-nav-store';
+import { TabLinkStore } from './tab-link-store';
 
-export class TabNav {
+export class TabLink {
   readonly path!: string;
 
   readonly title = signal<string>(null!);
 
-  constructor(title: string, path: string, private store: TabNavStore) {
+  constructor(title: string, path: string, private store: TabLinkStore) {
     this.path = path;
     this.title.set(title);
   }

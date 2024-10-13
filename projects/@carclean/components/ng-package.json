@@ -1,0 +1,8 @@
+{
+  "$schema": "../../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../../dist/@carclean/components",
+  "lib": {
+    "entryFile": "public-api.ts"
+  },
+  "assets": ["./_index.scss"]
+}

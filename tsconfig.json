@@ -22,7 +22,21 @@
     "lib": [
       "ES2022",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@carclean/components": [
+        "./dist/carclean/components"
+      ],
+      "components": [
+        "./dist/components"
+      ],
+      "sidenav": [
+        "./dist/sidenav"
+      ],
+      "toolbar": [
+        "./dist/toolbar"
+      ]
+    },
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

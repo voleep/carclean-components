@@ -1,7 +1,8 @@
+import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { computed, effect, Injectable, signal } from '@angular/core';
 import { DetachedRouteHandle } from '@angular/router';
-import { TabNav } from './tab-nav';
-import { TabNavStore } from './tab-nav-store';
+import { TabLink } from './tab-link';
+import { TabLinkStore } from './tab-link-store';
 
 interface TabModel {
   title: string;
@@ -9,17 +10,17 @@ interface TabModel {
 }
 
 interface TabMap {
-  tab: TabNav;
+  tab: TabLink;
   handle: DetachedRouteHandle | null;
 }
 
 @Injectable()
-export class DefaultTabNavStore extends TabNavStore {
+export class DefaultTabLinkStore extends TabLinkStore {
   private readonly storeKey = 'carclean-tabs';
 
   private tabsMap = signal<Map<string, TabMap>>(new Map());
 
-  override tabs = computed<TabNav[]>(() =>
+  override tabs = computed<TabLink[]>(() =>
     Array.from(this.tabsMap().values()).map((tab) => tab.tab)
   );
 
@@ -49,7 +50,7 @@ export class DefaultTabNavStore extends TabNavStore {
     }
 
     this.updateTabs((tabs) =>
-      tabs.set(path, { tab: new TabNav(title, path, this), handle: null })
+      tabs.set(path, { tab: new TabLink(title, path, this), handle: null })
     );
   }
 
@@ -70,6 +71,15 @@ export class DefaultTabNavStore extends TabNavStore {
     return this.updateTabs((tabs) => tabs.delete(path));
   }
 
+  override move(fromIndex: number, toIndex: number): void {
+    this.updateTabs((tabs) => {
+      const tabsArray = Array.from(tabs.values());
+      moveItemInArray(tabsArray, fromIndex, toIndex);
+      tabs.clear();
+      tabsArray.forEach((tab) => tabs.set(tab.tab.path, tab));
+    });
+  }
+
   private load(): void {
     const storedValue = localStorage.getItem(this.storeKey);
 
@@ -88,7 +98,7 @@ export class DefaultTabNavStore extends TabNavStore {
         .filter((tab) => this.isTabModel(tab))
         .forEach((tab) =>
           tabs.set(tab.path, {
-            tab: new TabNav(tab.title, tab.path, this),
+            tab: new TabLink(tab.title, tab.path, this),
             handle: null,
           })
         );

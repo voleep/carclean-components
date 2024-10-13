@@ -1,0 +1,11 @@
+<nav class="car-sidenav-content">
+  @for (destination of destinations(); track destination.label) {
+
+  <a class="car-sidenav-link">
+    <button mat-icon-button>
+      <mat-icon>{{ destination.icon }}</mat-icon>
+    </button>
+  </a>
+
+  }
+</nav>

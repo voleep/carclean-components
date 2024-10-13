@@ -1,0 +1,17 @@
+:host {
+  position: relative;
+  width: var(--mat-toolbar-mobile-height, 56px);
+}
+
+.car-sidenav-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: inherit;
+  transition: width 0.25s ease;
+  background-color: green;
+}
+
+:host.car-sidenav-opened .car-sidenav-content {
+  width: 300px;
+}

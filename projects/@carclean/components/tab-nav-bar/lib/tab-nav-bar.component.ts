@@ -1,3 +1,4 @@
+import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 import { NgFor } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -5,14 +6,14 @@ import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatTabLink, MatTabNav, MatTabNavPanel } from '@angular/material/tabs';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { TabNav } from './store/tab-nav';
-import { TabNavStore } from './store/tab-nav-store';
+import { TabLink } from './store/tab-link';
+import { TabLinkStore } from './store/tab-link-store';
 
 @Component({
-  selector: 'car-tab-nav',
+  selector: 'car-tab-nav-bar',
   standalone: true,
-  templateUrl: `./car-tab-nav.component.html`,
-  styles: ``,
+  templateUrl: `./tab-nav-bar.component.html`,
+  styleUrls: [`./tab-nav-bar.component.scss`],
   imports: [
     NgFor,
     MatTabNav,
@@ -21,12 +22,14 @@ import { TabNavStore } from './store/tab-nav-store';
     MatTabLink,
     RouterLink,
     RouterLinkActive,
+    CdkDrag,
+    CdkDropList,
     MatButton,
     MatIcon,
   ],
 })
-export class CarTabNav {
-  private readonly store = inject(TabNavStore);
+export class CarTabNavBar {
+  private readonly store = inject(TabLinkStore);
 
   private readonly router = inject(Router);
 
@@ -38,8 +41,14 @@ export class CarTabNav {
       .subscribe(this.onClose.bind(this));
   }
 
-  async close(tab: TabNav, event: Event): Promise<void> {
+  drop(event: CdkDragDrop<TabLink>) {
+    this.store.move(event.previousIndex, event.currentIndex);
+  }
+
+  async close(tab: TabLink, event: Event): Promise<void> {
     event.preventDefault();
+    event.stopImmediatePropagation();
+    event.stopPropagation();
     await tab.close();
   }
 
@@ -49,7 +58,7 @@ export class CarTabNav {
     event.preventDefault();
   }
 
-  async onClose(tab: TabNav): Promise<void> {
+  async onClose(tab: TabLink): Promise<void> {
     const index = this.tabs().indexOf(tab);
     const nextTab = this.tabs()[index + 1] ?? this.tabs()[index - 1];
     await this.router.navigate([nextTab?.path ?? '/']);
