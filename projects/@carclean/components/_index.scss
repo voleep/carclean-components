@@ -1,2 +1,9 @@
+@use "./sidenav/sidenav-theme" as sidenav;
+@use "./toolbar/toolbar-theme" as toolbar;
+@use "./tab-nav-bar/tab-nav-bar-theme" as tab-nav-bar;
+
 @mixin all-component-themes($theme) {
+  @include sidenav.theme($theme);
+  @include toolbar.theme($theme);
+  @include tab-nav-bar.theme($theme);
 }

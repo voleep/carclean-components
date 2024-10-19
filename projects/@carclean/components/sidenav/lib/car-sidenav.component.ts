@@ -1,8 +1,12 @@
 import { NgFor } from '@angular/common';
-import { Component, input, signal } from '@angular/core';
-import { MatIconButton } from '@angular/material/button';
-import { MatIcon } from '@angular/material/icon';
-import { CarDestination } from './car-destination';
+import { Component, input, signal, viewChildren } from '@angular/core';
+import {
+  CarDestination,
+  CarDestinationGroup,
+  CarDestinationLink,
+} from './car-destination';
+import { CarSidenavGroup } from './sidenav-group';
+import { CarSidenavLink } from './sidenav-link';
 
 @Component({
   selector: 'car-sidenav',
@@ -11,20 +15,40 @@ import { CarDestination } from './car-destination';
   styleUrl: './car-sidenav.component.scss',
   host: {
     '[class.car-sidenav-opened]': 'opened()',
-    '(mouseleave)': 'onMouseLeave()',
   },
-  imports: [NgFor, MatIconButton, MatIcon],
+  imports: [NgFor, CarSidenavGroup, CarSidenavLink],
 })
 export class CarSidenav {
   destinations = input.required<CarDestination[]>();
 
   readonly opened = signal(false);
 
-  toggle() {
-    this.opened.set(!this.opened());
+  readonly groups = viewChildren(CarSidenavGroup);
+
+  isLink(dest: CarDestination): CarDestinationLink | null {
+    return 'url' in dest ? dest : null;
   }
 
-  onMouseLeave(): void {
+  isGroup(dest: CarDestination): CarDestinationGroup | null {
+    return 'children' in dest ? dest : null;
+  }
+
+  toggle() {
+    if (this.opened()) {
+      this.close();
+    } else {
+      this.open();
+    }
+  }
+
+  open(): void {
+    if (this.opened()) return;
+    this.opened.set(true);
+  }
+
+  close(): void {
+    if (!this.opened()) return;
     this.opened.set(false);
+    this.groups().forEach((group) => group.opened.set(false));
   }
 }

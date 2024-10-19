@@ -7,6 +7,7 @@ import { TabLinkStore } from './tab-link-store';
 interface TabModel {
   title: string;
   path: string;
+  pinned?: boolean;
 }
 
 interface TabMap {
@@ -21,7 +22,7 @@ export class DefaultTabLinkStore extends TabLinkStore {
   private tabsMap = signal<Map<string, TabMap>>(new Map());
 
   override tabs = computed<TabLink[]>(() =>
-    Array.from(this.tabsMap().values()).map((tab) => tab.tab)
+    Array.from(this.tabsMap().values()).map((tab) => tab.tab),
   );
 
   constructor() {
@@ -33,7 +34,8 @@ export class DefaultTabLinkStore extends TabLinkStore {
         (tab): TabModel => ({
           title: tab.title(),
           path: tab.path,
-        })
+          pinned: tab.pinned(),
+        }),
       );
 
       localStorage.setItem(this.storeKey, JSON.stringify(models));
@@ -50,7 +52,10 @@ export class DefaultTabLinkStore extends TabLinkStore {
     }
 
     this.updateTabs((tabs) =>
-      tabs.set(path, { tab: new TabLink(title, path, this), handle: null })
+      tabs.set(path, {
+        tab: new TabLink(title, path, false, this),
+        handle: null,
+      }),
     );
   }
 
@@ -98,9 +103,9 @@ export class DefaultTabLinkStore extends TabLinkStore {
         .filter((tab) => this.isTabModel(tab))
         .forEach((tab) =>
           tabs.set(tab.path, {
-            tab: new TabLink(tab.title, tab.path, this),
+            tab: new TabLink(tab.title, tab.path, tab?.pinned ?? false, this),
             handle: null,
-          })
+          }),
         );
     });
   }

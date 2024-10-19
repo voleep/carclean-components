@@ -1,39 +1,61 @@
 <nav
   mat-tab-nav-bar
   cdkDropList
+  class="car-tab-nav-bar-list"
   cdkDropListOrientation="horizontal"
   [mat-stretch-tabs]="false"
   [tabPanel]="tabPanel"
   (cdkDropListDropped)="drop($event)"
 >
-  @for (tab of tabs(); track tab.path) {
-  <a
-    #routerLinkActive="routerLinkActive"
-    mat-tab-link
-    routerLinkActive
-    cdkDrag
-    [cdkDragData]="tab"
-    cdkDragBoundary=".mat-mdc-tab-links"
-    [routerLink]="tab.path"
-    [routerLinkActiveOptions]="{
-      matrixParams: 'exact',
-      queryParams: 'ignored',
-      paths: 'exact',
-      fragment: 'exact'
-    }"
-    [active]="routerLinkActive.isActive"
-  >
-    {{ tab.title() }}
-    <div class="tab-close-wrapper">
-      <button
-        mat-icon-button
-        (mousedown)="onCloseDown($event)"
-        (click)="close(tab, $event)"
+  @for (tab of tabs(); track tab) {
+    @if (tab.pinned()) {
+      <a
+        mat-tab-link
+        routerLinkActive
+        class="car-tab-nav-bar-link car-tab-nav-bar-link__pinned"
+        #routerLinkActive="routerLinkActive"
+        [routerLink]="tab.path"
+        [routerLinkActiveOptions]="isActiveOption"
+        [cdkContextMenuTriggerFor]="contextMenu"
+        [active]="routerLinkActive.isActive"
       >
-        <mat-icon>close</mat-icon>
-      </button>
-    </div>
-  </a>
+        {{ tab.title().slice(0, 1) }}
+
+        <ng-template #contextMenu>
+          <car-tab-nav-bar-menu [tab]="tab" />
+        </ng-template>
+      </a>
+    } @else {
+      <a
+        cdkDrag
+        mat-tab-link
+        routerLinkActive
+        class="car-tab-nav-bar-link"
+        #routerLinkActive="routerLinkActive"
+        cdkDragBoundary=".mat-mdc-tab-links"
+        cdkDragPreviewClass="car-tab-nav-bar__drag-preview"
+        [cdkDragData]="tab"
+        [routerLink]="tab.path"
+        [active]="routerLinkActive.isActive"
+        [cdkContextMenuTriggerFor]="contextMenu"
+        [routerLinkActiveOptions]="isActiveOption"
+      >
+        {{ tab.title() }}
+        <div class="tab-close-wrapper">
+          <button
+            mat-icon-button
+            (mousedown)="onCloseDown($event)"
+            (click)="close(tab, $event)"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+
+        <ng-template #contextMenu>
+          <car-tab-nav-bar-menu [tab]="tab" />
+        </ng-template>
+      </a>
+    }
   }
 </nav>
 

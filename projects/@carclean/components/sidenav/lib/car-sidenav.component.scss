@@ -1,17 +1,25 @@
+@use "@angular/material" as mat;
+
 :host {
   position: relative;
   width: var(--mat-toolbar-mobile-height, 56px);
 }
 
-.car-sidenav-content {
+.car-sidenav__content {
   display: flex;
   flex-direction: column;
   height: 100%;
   width: inherit;
   transition: width 0.25s ease;
-  background-color: green;
+  background-color: var(--car-sidenav-background-color);
+  overflow-x: hidden;
 }
 
-:host.car-sidenav-opened .car-sidenav-content {
-  width: 300px;
+:host.car-sidenav-opened .car-sidenav__content {
+  width: 350px;
+}
+
+.car-sidenav__link {
+  display: flex;
+  justify-content: center;
 }

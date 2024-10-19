@@ -1,0 +1,30 @@
+<div class="car-tab-nav-bar-menu__content">
+  @if (tab().pinned()) {
+    <button
+      class="car-tab-nav-bar-menu__item mat-mdc-focus-indicator"
+      cdkMenuItem
+      matRipple
+      (click)="tab().unpin()"
+    >
+      Desfixar
+    </button>
+  } @else {
+    <button
+      class="car-tab-nav-bar-menu__item mat-mdc-focus-indicator"
+      cdkMenuItem
+      matRipple
+      (click)="tab().pin()"
+    >
+      Fixar
+    </button>
+  }
+
+  <button
+    class="car-tab-nav-bar-menu__item mat-mdc-focus-indicator"
+    cdkMenuItem
+    matRipple
+    (click)="tab().close()"
+  >
+    Fechar
+  </button>
+</div>

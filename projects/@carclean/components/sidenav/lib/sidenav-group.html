@@ -1,0 +1,38 @@
+<div
+  #headerElement
+  tabindex="0"
+  class="sidenav-group__header"
+  [ngClass]="{ opened: opened() }"
+  (click)="toggle()"
+>
+  <div class="sidenav-group__icon">
+    @if (level() === 0) {
+      <mat-icon>{{ group().icon }}</mat-icon>
+    }
+  </div>
+
+  <span class="sidenav-group__label">{{ group().label }}</span>
+  <mat-icon class="sidenav-group__drop-down">arrow_right</mat-icon>
+</div>
+
+@if (opened()) {
+  <div class="sidenav-group__children" [@linkAnimation]>
+    @for (child of group().children; track child.label) {
+      @if (isLink(child); as link) {
+        <car-sidenav-link
+          [link]="link"
+          [level]="level() + 1"
+          (navigate)="navigate.emit($event)"
+        />
+      }
+
+      @if (isGroup(child); as group) {
+        <car-sidenav-group
+          [group]="group"
+          [level]="level() + 1"
+          (navigate)="navigate.emit($event)"
+        />
+      }
+    }
+  </div>
+}

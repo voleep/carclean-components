@@ -1,11 +1,19 @@
-<nav class="car-sidenav-content">
-  @for (destination of destinations(); track destination.label) {
+<nav class="car-sidenav__content">
+  @for (destination of destinations(); track destination) {
+    @if (isLink(destination); as link) {
+      <car-sidenav-link
+        [link]="link"
+        (click)="open()"
+        (navigate)="close()"
+      ></car-sidenav-link>
+    }
 
-  <a class="car-sidenav-link">
-    <button mat-icon-button>
-      <mat-icon>{{ destination.icon }}</mat-icon>
-    </button>
-  </a>
-
+    @if (isGroup(destination); as group) {
+      <car-sidenav-group
+        [group]="group"
+        (click)="open()"
+        (navigate)="close()"
+      ></car-sidenav-group>
+    }
   }
 </nav>

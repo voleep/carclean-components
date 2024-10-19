@@ -3,9 +3,17 @@ mat-toolbar {
 }
 
 mat-toolbar:has(.car-sidenav-trigger-wrapper > .car-sidenav-trigger) {
-  padding-left: 4px;
+  padding-left: 0;
 
   .car-sidenav-trigger-wrapper {
-    margin-right: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: var(--mat-toolbar-mobile-height, 56px);
+    width: var(--mat-toolbar-mobile-height, 56px);
+
+    ::ng-deep .car-sidenav-trigger {
+      color: var(--mat-toolbar-container-text-color);
+    }
   }
 }

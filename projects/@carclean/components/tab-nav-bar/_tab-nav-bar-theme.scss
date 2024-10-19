@@ -1,0 +1,49 @@
+@use "@angular/material" as mat;
+
+@mixin theme($theme) {
+  @if mat.get-theme-type($theme) == dark {
+    $color: mat.get-theme-color($theme, primary, 70);
+
+    --mdc-tab-indicator-active-indicator-color: #{$color};
+    --mat-tab-header-active-focus-indicator-color: #{$color};
+    --mat-tab-header-active-hover-indicator-color: #{$color};
+    --mat-tab-header-active-background-color: #{rgba(
+        $color: $color,
+        $alpha: 0.1
+      )};
+
+    --mat-tab-header-active-ripple-color: #{$color};
+    --mat-tab-header-inactive-ripple-color: #{$color};
+    --mat-sidenav-container-divider-color: #{$color};
+
+    --mat-tab-header-inactive-label-text-color: #{$color};
+    --mat-tab-header-inactive-hover-label-text-color: #{$color};
+    --mat-tab-header-inactive-focus-label-text-color: #{$color};
+
+    --mat-tab-header-active-label-text-color: #{$color};
+    --mat-tab-header-active-hover-label-text-color: #{$color};
+    --mat-tab-header-active-focus-label-text-color: #{$color};
+  } @else {
+    $color: mat.get-theme-color($theme, primary, 90);
+
+    --mdc-tab-indicator-active-indicator-color: #{$color};
+    --mat-tab-header-active-focus-indicator-color: #{$color};
+    --mat-tab-header-active-hover-indicator-color: #{$color};
+    --mat-tab-header-active-background-color: #{rgba(
+        $color: $color,
+        $alpha: 0.1
+      )};
+
+    --mat-tab-header-active-ripple-color: #{$color};
+    --mat-tab-header-inactive-ripple-color: #{$color};
+    --mat-sidenav-container-divider-color: #{$color};
+
+    --mat-tab-header-inactive-label-text-color: #{$color};
+    --mat-tab-header-inactive-hover-label-text-color: #{$color};
+    --mat-tab-header-inactive-focus-label-text-color: #{$color};
+
+    --mat-tab-header-active-label-text-color: #{$color};
+    --mat-tab-header-active-hover-label-text-color: #{$color};
+    --mat-tab-header-active-focus-label-text-color: #{$color};
+  }
+}
